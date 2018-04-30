@@ -8,10 +8,46 @@ using System.Threading.Tasks;
 
 namespace EntityFramework
 {
+    delegate void VoidDelegate();
+    delegate int IntDelgateWithStringArgs(string s);
+
+
+
+
     class Program
     {
+        public static void foo()
+        {
+            Console.WriteLine("Fo Foo");
+        }
+        public static void foot()
+        {
+            Console.WriteLine("Fo Foot");
+        }
+        public static int bart( int i, string s)
+        {
+            Console.WriteLine("Fo Foot");
+            return 0;
+        }
+
+        public static void Bar(Func<int, string, int> f)
+        {
+
+        }
+        public static void Bar(Action<int, string, int> f)
+        {
+
+        }
+
         static void Main(string[] args)
         {
+            Bar(bart);
+               VoidDelegate fnctPtr = foo;
+            fnctPtr = foot;
+
+            foo();
+            fnctPtr();
+
             Database.SetInitializer<MySuggestionDb>(
                 new DropCreateDatabaseIfModelChanges<MySuggestionDb>());
             // NEVER USE IN PRODUCTION
