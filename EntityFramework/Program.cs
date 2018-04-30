@@ -16,6 +16,7 @@ namespace EntityFramework
                 new DropCreateDatabaseIfModelChanges<MySuggestionDb>());
             // NEVER USE IN PRODUCTION
             var db = new MySuggestionDb();
+            db.SaveChanges();
 
             db.Communications.Add(new Communication
             {
@@ -62,8 +63,20 @@ namespace EntityFramework
             });
             db.SaveChanges();
 
+            var list2 = db.Communications.Where(c => Contains(c.Sender.Email,"v"))
+                .ToList();
+            foreach (var c in list2)
+            {
+                Console.WriteLine(c.Sender.Email);
+            }
+
 
             Console.ReadLine();
+        }
+
+        private static bool Contains(string senderEmail, string s)
+        {
+            return senderEmail.Contains(s);
         }
     }
 }
